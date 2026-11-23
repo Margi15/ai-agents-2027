@@ -1,346 +1,258 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 AI Agents Ecosystem 2027</title>
+    <title>🧠 AI AGENTS NETWORK 2027</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0e27; color: #e8eef5; font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; }
+        .container { display: flex; height: 100vh; }
 
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            background-attachment: fixed;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            min-height: 100vh;
+        .sidebar {
+            width: 280px;
+            background: #0d1117;
+            border-right: 2px solid #39ff14;
             padding: 20px;
+            overflow-y: auto;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .sidebar h1 { color: #39ff14; font-size: 16px; margin-bottom: 10px; letter-spacing: 2px; }
+        .sidebar p { color: #8b949e; font-size: 11px; margin-bottom: 20px; }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: slideDown 0.6s ease;
-        }
+        .stats { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #39ff14; }
+        .stat { text-align: center; }
+        .stat-num { color: #39ff14; font-size: 18px; font-weight: bold; }
+        .stat-label { color: #8b949e; font-size: 10px; }
 
-        h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            font-weight: 900;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section {
-            margin-bottom: 60px;
-        }
-
-        .section-title {
-            font-size: 32px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 4px solid rgba(255,255,255,0.3);
-            font-weight: 700;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 25px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeIn 0.6s ease forwards;
-            opacity: 0;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        .card:nth-child(7) { animation-delay: 0.7s; }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-
-        .card.active {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-
-        .card h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .role {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #ffeb3b;
-        }
-
-        .description {
-            font-size: 14px;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .stars {
-            font-size: 13px;
-            font-weight: 700;
-            color: #ff6b6b;
-        }
-
-        .roadmap {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-        }
-
-        .roadmap ol {
-            margin: 20px 0 0 25px;
-        }
-
-        .roadmap li {
-            font-size: 16px;
-            margin: 15px 0;
-            line-height: 1.8;
-            padding-left: 10px;
-        }
-
-        .roadmap strong {
-            color: #ffeb3b;
-        }
-
-        .cta {
-            text-align: center;
-            margin-top: 50px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid white;
-            color: white;
-            padding: 15px 40px;
-            font-size: 16px;
-            border-radius: 50px;
+        .repo-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: #161b22;
+            border: 1px solid #39ff14;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 700;
-            margin: 10px;
+            font-size: 12px;
         }
 
-        .btn:hover {
-            background: white;
-            color: #667eea;
-            transform: scale(1.05);
+        .repo-item:hover {
+            background: #0f1a2e;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
         }
 
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 2px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
+        .repo-name { color: #39ff14; font-weight: bold; }
+        .repo-info { color: #8b949e; font-size: 10px; }
+
+        .canvas {
+            flex: 1;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            position: relative;
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 32px; }
-            .section-title { font-size: 24px; }
-            .grid { grid-template-columns: 1fr; }
+        svg { width: 100%; height: 100%; }
+
+        .link {
+            stroke: #39ff14;
+            stroke-opacity: 0.2;
+            stroke-width: 1.5;
         }
+
+        .link.active {
+            stroke: #39ff14;
+            stroke-opacity: 0.6;
+            stroke-width: 2.5;
+        }
+
+        .node {
+            cursor: pointer;
+        }
+
+        .node-circle {
+            filter: drop-shadow(0 0 5px #39ff14);
+            transition: all 0.3s;
+        }
+
+        .node-circle:hover {
+            filter: drop-shadow(0 0 15px #39ff14);
+        }
+
+        .node-circle.active {
+            filter: drop-shadow(0 0 25px #39ff14);
+            stroke: #ffff00;
+            stroke-width: 3;
+        }
+
+        .node-label {
+            font-size: 10px;
+            font-weight: bold;
+            text-anchor: middle;
+            pointer-events: none;
+            fill: white;
+            text-shadow: 0 1px 3px #0a0e27;
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(13, 17, 23, 0.95);
+            border: 2px solid #39ff14;
+            padding: 15px;
+            border-radius: 4px;
+            max-width: 280px;
+            display: none;
+            font-size: 12px;
+        }
+
+        .info-panel.active { display: block; }
+        .info-panel h3 { color: #39ff14; margin-bottom: 8px; }
+        .info-panel p { color: #8b949e; margin: 5px 0; line-height: 1.6; }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🧠 AI AGENTS ECOSYSTEM 2027</h1>
-            <p class="subtitle">12 repositorios que necesitas dominar para tu negocio</p>
-        </header>
+        <div class="sidebar">
+            <h1>🧠 CLAUDE / AI AGENTS</h1>
+            <p>LIVE 00:10:44 • a network of repos</p>
 
-        <div class="section">
-            <h2 class="section-title">⭐ 7 CORE REPOS (CLONAR PRIMERO)</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>🎯 Paperclip</h3>
-                    <div class="role">Orchestration</div>
-                    <p class="description">Coordina múltiples agentes AI para trabajar juntos. Es el JEFE que controla todo.</p>
-                    <div class="stars">⭐ 125K stars</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-num" id="cloned">12</div>
+                    <div class="stat-label">CLONED</div>
                 </div>
-
-                <div class="card">
-                    <h3>🌐 Agent Reach</h3>
-                    <div class="role">Web Access</div>
-                    <p class="description">Da acceso a internet a los agentes. Sin esto, tu agente NO puede ver web ni buscar.</p>
-                    <div class="stars">⭐ 95K stars</div>
+                <div class="stat">
+                    <div class="stat-num" id="stars">531K</div>
+                    <div class="stat-label">STARS</div>
                 </div>
-
-                <div class="card">
-                    <h3>💼 Career-ops</h3>
-                    <div class="role">Job Automation</div>
-                    <p class="description">Automatiza búsqueda de empleos y aplicaciones. Un agente aplica a trabajos solo.</p>
-                    <div class="stars">⭐ 78K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>🔒 Strix</h3>
-                    <div class="role">Security</div>
-                    <p class="description">Protege que los agentes no hagan cosas malas o peligrosas. Control de seguridad.</p>
-                    <div class="stars">⭐ 56K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>🎨 AI Website Cloner</h3>
-                    <div class="role">Dev Automation</div>
-                    <p class="description">Copia sitios web automáticamente y genera código. Para clonar/automatizar websites.</p>
-                    <div class="stars">⭐ 42K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>🎬 Hypit</h3>
-                    <div class="role">Video</div>
-                    <p class="description">Crea y edita videos automáticamente. Un agente genera videos sin intervención humana.</p>
-                    <div class="stars">⭐ 68K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>📄 OfficeCLI</h3>
-                    <div class="role">Office Automation</div>
-                    <p class="description">Crea documentos Word, Excel, PowerPoint automáticamente. Para generar reportes.</p>
-                    <div class="stars">⭐ 32K stars</div>
+                <div class="stat">
+                    <div class="stat-num" id="active">12</div>
+                    <div class="stat-label">ACTIVE</div>
                 </div>
             </div>
+
+            <div id="repoList"></div>
         </div>
 
-        <div class="section">
-            <h2 class="section-title">🛠️ ECOSISTEMA (Frameworks & Tools)</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>⛓️ LangChain</h3>
-                    <div class="role">Framework BASE</div>
-                    <p class="description">El FRAMEWORK fundamental. Librería que todos usan. APRENDE ESTO PRIMERO.</p>
-                    <div class="stars">⭐ 89K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>📊 LlamaIndex</h3>
-                    <div class="role">Data/Vector DB</div>
-                    <p class="description">Indexa datos para búsqueda rápida. Los agentes buscan en bases de datos grandes.</p>
-                    <div class="stars">⭐ 54K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>🤖 AutoGen</h3>
-                    <div class="role">Multi-agent Framework</div>
-                    <p class="description">Múltiples agentes conversan y se ayudan entre sí. Framework de Microsoft.</p>
-                    <div class="stars">⭐ 32K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>🎯 Dify</h3>
-                    <div class="role">No-code Platform</div>
-                    <p class="description">Interface sin código para construir agentes. Para no-coders.</p>
-                    <div class="stars">⭐ 42K stars</div>
-                </div>
-
-                <div class="card">
-                    <h3>💻 Open Interpreter</h3>
-                    <div class="role">Code Execution</div>
-                    <p class="description">Permite que un agente EJECUTE código en tu computadora. Acceso total.</p>
-                    <div class="stars">⭐ 48K stars</div>
-                </div>
+        <div class="canvas">
+            <svg id="network"></svg>
+            <div class="info-panel" id="infoPanel">
+                <h3 id="infoName"></h3>
+                <p id="infoRole"></p>
+                <p id="infoDesc"></p>
             </div>
         </div>
-
-        <div class="section">
-            <div class="roadmap">
-                <h2 class="section-title">📚 ORDEN PARA APRENDER (Learning Path)</h2>
-                <ol>
-                    <li><strong>LangChain</strong> - Base de TODO (frameworks y construir agentes)</li>
-                    <li><strong>Paperclip</strong> - Cómo orquestar múltiples agentes</li>
-                    <li><strong>Agent Reach</strong> - Acceso web para agentes</li>
-                    <li><strong>Open Interpreter</strong> - Ejecución de código</li>
-                    <li><strong>Los otros 7 repos</strong> - Según qué quieras automatizar (jobs, videos, documentos, etc)</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="cta">
-            <h2>🚀 ¿Listo para empezar?</h2>
-            <p style="margin: 20px 0 30px 0; font-size: 16px;">Clona estos repos y empieza a construir tu negocio con AI agents</p>
-            <a href="https://github.com" class="btn">📦 Ir a GitHub</a>
-            <a href="https://langchain.com" class="btn">📚 Aprender LangChain</a>
-        </div>
-
-        <footer>
-            <p>🧠 AI Agents Ecosystem 2027 | Tu guía completa para dominar agentes AI</p>
-            <p style="margin-top: 10px; opacity: 0.7;">Created with ❤️ para tu negocio</p>
-        </footer>
     </div>
 
     <script>
-        // Agregar interactividad a las tarjetas
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-            });
+        const repos = [
+            { id: "paperclip", name: "Paperclip", role: "ORCHESTRATION", desc: "Agent orchestration framework", stars: 125, color: "#ff006e" },
+            { id: "agent-reach", name: "Agent Reach", role: "WEB ACCESS", desc: "Web browsing & scraping", stars: 95, color: "#00d9ff" },
+            { id: "career-ops", name: "Career-ops", role: "JOB AUTOMATION", desc: "Job search automation", stars: 78, color: "#ffd60a" },
+            { id: "strix", name: "Strix", role: "SECURITY", desc: "Security & compliance", stars: 56, color: "#a100f2" },
+            { id: "ai-website", name: "AI Website", role: "DEV AUTOMATION", desc: "Website generation", stars: 42, color: "#ff9500" },
+            { id: "hypit", name: "Hypit", role: "VIDEO", desc: "Video creation automation", stars: 68, color: "#ff006e" },
+            { id: "officecli", name: "OfficeCLI", role: "OFFICE", desc: "Office documents", stars: 32, color: "#39ff14" },
+            { id: "llamaindex", name: "LlamaIndex", role: "DATA/VECTOR", desc: "Data indexing", stars: 54, color: "#ff9500" },
+            { id: "langchain", name: "LangChain", role: "FRAMEWORK", desc: "LLM framework", stars: 89, color: "#00ffff" },
+            { id: "autogen", name: "AutoGen", role: "MULTI-AGENT", desc: "Agent conversations", stars: 32, color: "#ff00ff" },
+            { id: "dify", name: "Dify", role: "NO-CODE", desc: "LLM app builder", stars: 42, color: "#ffaa00" },
+            { id: "openinterp", name: "Open Interp", role: "CODE EXECUTION", desc: "Code execution", stars: 48, color: "#00ff00" }
+        ];
+
+        const links = [
+            { source: "paperclip", target: "agent-reach" },
+            { source: "paperclip", target: "career-ops" },
+            { source: "paperclip", target: "strix" },
+            { source: "paperclip", target: "langchain" },
+            { source: "agent-reach", target: "career-ops" },
+            { source: "langchain", target: "llamaindex" },
+            { source: "langchain", target: "autogen" },
+            { source: "llamaindex", target: "career-ops" },
+            { source: "paperclip", target: "hypit" },
+            { source: "paperclip", target: "ai-website" },
+            { source: "ai-website", target: "openinterp" },
+            { source: "openinterp", target: "strix" },
+            { source: "dify", target: "langchain" },
+            { source: "autogen", target: "career-ops" }
+        ];
+
+        const width = document.querySelector('.canvas').clientWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select('#network')
+            .attr('viewBox', [0, 0, width, height]);
+
+        const simulation = d3.forceSimulation(repos)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(150))
+            .force('charge', d3.forceManyBody().strength(-800))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide(60));
+
+        const link = svg.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('class', 'link')
+            .attr('stroke-width', 1.5);
+
+        const node = svg.selectAll('.node')
+            .data(repos)
+            .enter()
+            .append('g')
+            .attr('class', 'node')
+            .on('click', (e, d) => selectRepo(d.id));
+
+        node.append('circle')
+            .attr('class', 'node-circle')
+            .attr('r', d => Math.sqrt(d.stars / 1000) + 20)
+            .attr('fill', d => d.color)
+            .attr('stroke', '#39ff14')
+            .attr('stroke-width', 1.5);
+
+        node.append('text')
+            .attr('class', 'node-label')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+            .text(d => d.name.length > 12 ? d.name.substring(0, 10) + '..' : d.name);
+
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+
+            node.attr('transform', d => `translate(${d.x},${d.y})`);
         });
+
+        function renderSidebar() {
+            const html = repos.map(r => `
+                <div class="repo-item" onclick="selectRepo('${r.id}')">
+                    <div class="repo-name">${r.name}</div>
+                    <div class="repo-info">${r.role} • ${r.stars}K</div>
+                </div>
+            `).join('');
+            document.getElementById('repoList').innerHTML = html;
+        }
+
+        window.selectRepo = function(id) {
+            const repo = repos.find(r => r.id === id);
+            if (!repo) return;
+
+            d3.selectAll('.node-circle').classed('active', false);
+            d3.selectAll('.node').filter(d => d.id === id).select('.node-circle').classed('active', true);
+
+            d3.selectAll('.repo-item').style('background', '#161b22');
+            d3.selectAll('.repo-item').filter((d, i) => repos[i].id === id).style('background', '#0f1a2e').style('box-shadow', '0 0 15px rgba(57, 255, 20, 0.5)');
+
+            document.getElementById('infoName').textContent = repo.name + ' ⭐';
+            document.getElementById('infoRole').textContent = repo.role;
+            document.getElementById('infoDesc').textContent = repo.desc + ` • ${repo.stars}K stars`;
+            document.getElementById('infoPanel').classList.add('active');
+        };
+
+        renderSidebar();
     </script>
 </body>
 </html>
